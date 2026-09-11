@@ -23,10 +23,6 @@ app.post('/patients', async (req, res) => {
   res.status(201).json(patient)
 })
 
-app.put('/patients/:id', (req, res) => {
-  console.log(req)
-})
-
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000')
 })
