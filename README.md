@@ -2,7 +2,7 @@
 
 <img width="100%" height="auto" alt="Logotipo" src="/imagens/saude_e_oncologia.jpg" />
 
-Este diretório serve para armazenar protótipo e documentos referente ao projeto de TCC-II.
+Este diretório serve para armazenar o protótipo e os documentos referentes ao projeto de TCC-II.
 
 Autoria:  Felipe Braga <feslipebraga@gmail.com>
 Co-Autoria:  Maria de Fatima Barbosa <barbosamariaf27@gmail.com>
