@@ -1,16 +1,30 @@
 import express from 'express'
+import 'dotenv/config'
+import { PrismaClient } from "./generated/prisma/client.ts";
+
 const app = express()
 app.use(express.json())
 
-const patients = []
+const prisma = new PrismaClient();
 
-app.get('/patients', (req, res) => {
+app.get('/patients', async (req, res) => {
+  const patients = await prisma.patient.findMany()
   res.status(200).json(patients)
 })
 
-app.post('/patients', (req, res) => {
-    patients.push(req.body)
-    res.status(201).send('Patient added successfully')
+app.post('/patients', async (req, res) => {
+  const patient = await prisma.patient.create({
+    data: {
+      name: req.body.name,
+      age: req.body.age,
+      email: req.body.email
+    }
+  })
+  res.status(201).json(patient)
+})
+
+app.put('/patients/:id', (req, res) => {
+  console.log(req)
 })
 
 app.listen(3000, () => {
