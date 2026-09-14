@@ -7,11 +7,13 @@ app.use(express.json())
 
 const prisma = new PrismaClient();
 
+// Rota para obter todos os pacientes
 app.get('/patients', async (req, res) => {
   const patients = await prisma.patient.findMany()
   res.status(200).json(patients)
 })
 
+// Rota para criar um novo paciente
 app.post('/patients', async (req, res) => {
   const patient = await prisma.patient.create({
     data: {
@@ -23,8 +25,46 @@ app.post('/patients', async (req, res) => {
   res.status(201).json(patient)
 })
 
-app.put('/patients/:id', (req, res) => {
-  console.log(req)
+// Rota para atualizar um paciente existente
+app.put('/patients/:id', async (req, res) => {
+  const patientId = req.params.id;
+  const {name, age, email} = req.body;
+
+  const updatedPatient = await prisma.patient.update({
+    where: {
+      id: patientId
+    },
+    data: {
+      name: name,
+      age: age,
+      email: email
+    }
+  })
+  res.status(200).json({
+    message: 'Patient updated successfully',
+    patient: updatedPatient
+  })
+})
+
+// Rota para deletar um paciente existente
+app.delete('/patients/:id', async (req, res) => {
+  const patientId = req.params.id;
+  try {
+    const deletedPatient = await prisma.patient.delete({
+      where: {
+        id: patientId
+      }
+    });
+    res.status(200).json({
+      message: 'Patient deleted sucessfully',
+      patient: deletedPatient
+    })
+  }
+  catch (error) {
+    res.status(404).json({
+      message: 'Patient not found'
+    })
+  }
 })
 
 app.listen(3000, () => {
